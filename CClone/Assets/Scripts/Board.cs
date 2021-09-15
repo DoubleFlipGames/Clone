@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    [SerializeField] int width; //grid alaný
-    [SerializeField] int height;
+    [SerializeField]public int width; //grid alaný
+    [SerializeField]public int height;
 
     public GameObject[] dots;//oluþturalacak assetler 
 
