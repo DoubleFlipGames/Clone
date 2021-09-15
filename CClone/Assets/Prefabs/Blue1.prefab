@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1682481485522507247}
   m_Layer: 0
   m_Name: Blue1
-  m_TagString: Untagged
+  m_TagString: Blue1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,6 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d12854a65895a1c4499ddfd204cd3f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  column: 0
+  row: 0
+  targetX: 0
+  targetY: 0
+  isMatched: 0
   swipeAngle: 0
 --- !u!58 &-1682481485522507247
 CircleCollider2D:
