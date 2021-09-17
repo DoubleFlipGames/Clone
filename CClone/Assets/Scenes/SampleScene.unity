@@ -265,6 +265,10 @@ PrefabInstance:
       propertyPath: offSet
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: destroyEffect
+      value: 
+      objectReference: {fileID: 2774747111142333101, guid: 3412a786af6e7d54b97b7a4aa6aa5d66, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
 --- !u!1 &2064670483
@@ -292,7 +296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064670483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0539691, y: 3.409011, z: -0.037448406}
+  m_LocalPosition: {x: 2.95, y: 1.45, z: -0.037448406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

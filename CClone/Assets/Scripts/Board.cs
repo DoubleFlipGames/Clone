@@ -18,6 +18,8 @@ public class Board : MonoBehaviour
     public int offSet;
     public GameObject[] dots;//olusturalacak assetler 
 
+    public GameObject destroyEffect;
+
     public GameObject tilePrefab;
 
     private BackgroundTile[,] allTiles; //gridler
@@ -108,6 +110,7 @@ public class Board : MonoBehaviour
         if(allDots[column, row].GetComponent<Dot>().isMatched)
         {
             findMatches.currentMatches.Remove(allDots[column, row]);
+            Instantiate(destroyEffect,allDots[column,row].transform.position,Quaternion.identity);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
         }
