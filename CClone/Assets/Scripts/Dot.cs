@@ -19,12 +19,23 @@ public class Dot : MonoBehaviour
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
+
+    [Header("Swipe Stuff")]
     public float swipeAngle = 0;
     public float swipeResist = 1f;
+
+    [Header("Powerup Stuff")]
+    public bool isColumnBomb;
+    public bool isRowBomb;
+    public GameObject rowArrow;
+    public GameObject columnArrow;
 
     // Start is called before the first frame update
     void Start()
     {
+        isColumnBomb = false;
+        isRowBomb = false;
+
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         //targetX = (int)transform.position.x;
@@ -33,6 +44,17 @@ public class Dot : MonoBehaviour
         //column = targetX;
         //previousRow = row;
         //previousColumn = column;
+    }
+
+    //This is for testing and Debug only.
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            isColumnBomb = true;
+            GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = this.transform;
+        }
     }
 
     // Update is called once per frame
