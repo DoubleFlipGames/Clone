@@ -99,10 +99,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   column: 0
   row: 0
+  previousColumn: 0
+  previousRow: 0
   targetX: 0
   targetY: 0
   isMatched: 0
   swipeAngle: 0
+  swipeResist: 1
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 4949488731860699441, guid: 2d05fd8290f2f1a439336be79b37e95e, type: 3}
+  columnArrow: {fileID: 7022498875607448483, guid: bbd47ce8adb38d648bb42eefe6ac0fe4, type: 3}
 --- !u!58 &-1682481485522507247
 CircleCollider2D:
   m_ObjectHideFlags: 0
