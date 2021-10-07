@@ -104,12 +104,15 @@ MonoBehaviour:
   targetX: 0
   targetY: 0
   isMatched: 0
+  otherDot: {fileID: 0}
   swipeAngle: 0
   swipeResist: 1
+  isColorBomb: 0
   isColumnBomb: 0
   isRowBomb: 0
   rowArrow: {fileID: 4949488731860699441, guid: 2d05fd8290f2f1a439336be79b37e95e, type: 3}
   columnArrow: {fileID: 7022498875607448483, guid: bbd47ce8adb38d648bb42eefe6ac0fe4, type: 3}
+  colorBomb: {fileID: 6190448264271026406, guid: 563573cb34a081a478c2a57b085d9c14, type: 3}
 --- !u!58 &4469421412819890421
 CircleCollider2D:
   m_ObjectHideFlags: 0
