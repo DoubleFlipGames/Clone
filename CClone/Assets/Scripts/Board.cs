@@ -8,6 +8,20 @@ public enum GameState
     move
 }
 
+public enum TileKind
+{
+    Breakable,
+    Blank,
+    Normal
+}
+
+[System.Serializable]
+public class TileType
+{
+    public int x;
+    public int y;
+    public TileKind tileKind;
+}
 
 public class Board : MonoBehaviour
 {
@@ -19,6 +33,9 @@ public class Board : MonoBehaviour
     public GameObject[] dots;//olusturalacak assetler 
 
     public GameObject destroyEffect;
+
+    public TileType[] boardLayout;
+    private bool[,] blankSpaces;
 
     public GameObject tilePrefab;
 
@@ -33,72 +50,100 @@ public class Board : MonoBehaviour
     void Start()
     {
         findMatches = FindObjectOfType<FindMatches>();
-        allTiles = new BackgroundTile[width, height];  //grid oluþturma
+        blankSpaces = new bool[width, height];  //grid oluþturma
         allDots = new GameObject[width, height];
         SetUp(); //instantiate fonksiyon
     }
 
+    public void GenerateBlankSpaces()
+    {
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            if (boardLayout[i].tileKind == TileKind.Blank)
+            {
+                blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
+    }
+
     private void SetUp()
     {
+        GenerateBlankSpaces();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform;
-                backgroundTile.name = "(" + i + "," + j + ")";
+                if (!blankSpaces[i, j])
+                {
 
-                //kullanýlacak assetler,þekerler
 
-                int dotToUse = Random.Range(0, dots.Length);
+                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                    backgroundTile.transform.parent = this.transform;
+                    backgroundTile.name = "(" + i + "," + j + ")";
 
-                int maxIterations = 0; 
-                while (MachesAt(i, j, dots[dotToUse]) && maxIterations < 100){
-                    dotToUse = Random.Range(0, dots.Length);
-                    maxIterations++;
-                    Debug.Log(maxIterations);
+                    //kullanýlacak assetler,þekerler
+
+                    int dotToUse = Random.Range(0, dots.Length);
+
+                    int maxIterations = 0;
+                    while (MachesAt(i, j, dots[dotToUse]) && maxIterations < 100)
+                    {
+                        dotToUse = Random.Range(0, dots.Length);
+                        maxIterations++;
+                        Debug.Log(maxIterations);
+                    }
+                    maxIterations = 0;
+
+                    GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    dot.GetComponent<Dot>().row = j;
+                    dot.GetComponent<Dot>().column = i;
+                    dot.transform.parent = this.transform;
+                    dot.name = "(" + i + "," + j + ")";
+                    allDots[i, j] = dot;
                 }
-                maxIterations = 0;
-
-                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                dot.GetComponent<Dot>().row = j;
-                dot.GetComponent<Dot>().column = i;
-                dot.transform.parent = this.transform;
-                dot.name = "(" + i + "," + j + ")";
-                allDots[i, j] = dot;
             }
         }
-
     }
 
     private bool MachesAt(int column,int row, GameObject piece)
     {
         if (column > 1 && row >1)
         {
-            if (allDots[column-1,row].tag == piece.tag && allDots[column-2,row].tag == piece.tag)
+            if (allDots[column - 1, row] != null && allDots[column - 2, row] != null)
             {
-                return true;
-            }
-            if (allDots[column, row-1].tag == piece.tag && allDots[column, row-2].tag == piece.tag)
-            {
-                return true;
-            }
-
-        }else if(column <= 1 || row <= 1)
-        {
-            if (row > 1)
-            {
-                if(allDots[column,row-1].tag == piece.tag && allDots[column,row-2].tag == piece.tag)
+                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
                 {
                     return true;
                 }
             }
-            if (column > 1)
+            if (allDots[column, row-1] != null && allDots[column , row-2] != null)
             {
-                if (allDots[column-1, row].tag == piece.tag && allDots[column-2, row].tag == piece.tag)
+                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
                 {
                     return true;
+                }
+            }
+        }else if(column <= 1 || row <= 1)
+        {
+            if (row > 1)
+            {
+                if (allDots[column, row - 1] != null && allDots[column, row - 2] != null)
+                {
+                    if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (column > 1)
+            {
+                if (allDots[column-1, row] != null && allDots[column-2, row] != null)
+                {
+                    if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -231,8 +276,39 @@ public class Board : MonoBehaviour
         }
 
         findMatches.currentMatches.Clear();
-        StartCoroutine(DecraseRowCo());
+        StartCoroutine(DecraseRowCo2());
     }
+
+    private IEnumerator DecraseRowCo2()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                //if the current spot isn't blank or is empty...
+                if (!blankSpaces[i,j] && allDots[i,j] == null)
+                {
+                    //loop from the space above to the top of the column
+                    for (int k = j+1; k < height; k++)
+                    {
+                        //if a dot is found...
+                        if (allDots[i,j]!=null)
+                        {
+                            //move that dot to this empty space
+                            allDots[i, j].GetComponent<Dot>().row = j;
+                            //set that spot to be null
+                            allDots[i, k] = null;
+                            //break out of the loop
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
+    }
+
 
     private IEnumerator DecraseRowCo()
     {

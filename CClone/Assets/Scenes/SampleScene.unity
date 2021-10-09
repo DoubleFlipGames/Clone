@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -613,6 +614,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b32ca6eca532e46b6341aeb9e6b3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraOffset: -20
+  aspectRatio: 0.625
+  padding: 2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1511,6 +1527,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: width
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: height
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
       propertyPath: offSet
       value: 20
       objectReference: {fileID: 0}
@@ -1518,6 +1542,66 @@ PrefabInstance:
       propertyPath: destroyEffect
       value: 
       objectReference: {fileID: 2774747111142333101, guid: 3412a786af6e7d54b97b7a4aa6aa5d66, type: 3}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[1].x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[1].y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[2].x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[3].y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[4].x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[4].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[5].x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[5].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[0].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[1].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[2].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[3].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[4].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[5].tileKind
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
 --- !u!1 &1554367935
