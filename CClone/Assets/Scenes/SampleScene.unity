@@ -1543,8 +1543,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2774747111142333101, guid: 3412a786af6e7d54b97b7a4aa6aa5d66, type: 3}
     - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: breakablePrefab
+      value: 
+      objectReference: {fileID: 7202149214956367203, guid: 3e0122a04151d9b42a865fadd8066a95, type: 3}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
       propertyPath: boardLayout.Array.size
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
       propertyPath: boardLayout.Array.data[1].x
@@ -1579,6 +1583,54 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[6].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[6].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[7].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[7].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[8].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[8].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[9].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[9].y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[10].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[10].y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[11].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[11].y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
       propertyPath: boardLayout.Array.data[0].tileKind
       value: 1
       objectReference: {fileID: 0}
@@ -1601,6 +1653,30 @@ PrefabInstance:
     - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
       propertyPath: boardLayout.Array.data[5].tileKind
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[6].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[7].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[8].tileKind
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[9].tileKind
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[10].tileKind
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190571913015640510, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}
+      propertyPath: boardLayout.Array.data[11].tileKind
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60fc2f994a7ca7644aa9696c9f210c5d, type: 3}

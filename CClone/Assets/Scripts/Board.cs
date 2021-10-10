@@ -30,16 +30,16 @@ public class Board : MonoBehaviour
     [SerializeField]public int width; //grid alaný
     [SerializeField]public int height;
     public int offSet;
-    public GameObject[] dots;//olusturalacak assetler 
-
+    public GameObject tilePrefab;
+    public GameObject breakablePrefab;
+    public GameObject[] dots;//olusturalacak assetler
     public GameObject destroyEffect;
-
     public TileType[] boardLayout;
     private bool[,] blankSpaces;
+    private BackgroundTile[,] backgroundTiles;
 
-    public GameObject tilePrefab;
-
-    private BackgroundTile[,] allTiles; //gridler
+    private BackgroundTile[,] allTiles; //gridler?
+    private BackgroundTile[,] breakableTiles;
 
     public GameObject[,] allDots;
     public Dot currentDot;
@@ -49,6 +49,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        breakableTiles = new BackgroundTile[width,height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];  //grid oluþturma
         allDots = new GameObject[width, height];
@@ -66,9 +67,27 @@ public class Board : MonoBehaviour
         }
     }
 
+
+    public void GenerateBreakableTiles()
+    {
+        //Look at all the tiles in the layout
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            //if a tile is a "Jelly" tile
+            if (boardLayout[i].tileKind == TileKind.Breakable)
+            {
+                //Create a "Jelly" tile at that position
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(breakablePrefab,tempPosition,Quaternion.identity);
+                breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+        }
+    }
+
     private void SetUp()
     {
         GenerateBlankSpaces();
+        GenerateBreakableTiles();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -255,6 +274,18 @@ public class Board : MonoBehaviour
             {
                 CheckToMakeBombs();
             }
+
+            //Does a tile need to break?
+            if (breakableTiles[column,row] !=null)
+            {
+                //if does, give one damage
+                breakableTiles[column, row].TakeDamage(1);
+                if (breakableTiles[column,row].hitPoints <= 0)
+                {
+                    breakableTiles[column, row] = null;
+                }
+            }
+
             GameObject particle = Instantiate(destroyEffect,allDots[column,row].transform.position,Quaternion.identity);
             Destroy(particle,.5f);
             Destroy(allDots[column, row]);
@@ -292,10 +323,10 @@ public class Board : MonoBehaviour
                     for (int k = j+1; k < height; k++)
                     {
                         //if a dot is found...
-                        if (allDots[i,j]!=null)
+                        if (allDots[i,k]!=null)
                         {
                             //move that dot to this empty space
-                            allDots[i, j].GetComponent<Dot>().row = j;
+                            allDots[i, k].GetComponent<Dot>().row = j;
                             //set that spot to be null
                             allDots[i, k] = null;
                             //break out of the loop
@@ -339,7 +370,7 @@ public class Board : MonoBehaviour
         {
             for(int j = 0; j < height; j++)
             {
-                if(allDots[i,j] == null)
+                if(allDots[i,j] == null && !blankSpaces[i,j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
