@@ -13,6 +13,7 @@ public class Dot : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+    private Hint hint;
     private FindMatches findMatches;
     private Board board;
     public GameObject otherDot;
@@ -42,14 +43,10 @@ public class Dot : MonoBehaviour
         isColorBomb = false;
         isAdjacentBomb = false;
 
+        hint = FindObjectOfType<Hint>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
-        //targetX = (int)transform.position.x;
-        //targetY = (int)transform.position.y;
-        //row = targetY;
-        //column = targetX;
-        //previousRow = row;
-        //previousColumn = column;
+        
     }
 
     //This is for testing and Debug only.
@@ -66,14 +63,7 @@ public class Dot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FindMatches();
-        /*
-        if (isMatched)
-        {
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f,.2f);
-        }
-        */
+        
         targetX = column;
         targetY = row;
         if (Mathf.Abs(targetX - transform.position.x) > .1)
@@ -152,6 +142,12 @@ public class Dot : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Destroy the hint
+        if (hint!=null)
+        {
+            hint.DestroyHint();
+        }
+        
         if (board.currentState== GameState.move)
         {
             firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -329,6 +325,7 @@ public class Dot : MonoBehaviour
         isColorBomb = true;
         GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
         color.transform.parent = this.transform;
+        this.gameObject.tag = "Color";
     }
 
 }

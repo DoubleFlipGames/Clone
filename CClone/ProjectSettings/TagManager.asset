@@ -10,6 +10,8 @@ TagManager:
   - Yellow1
   - Board
   - Tile Background
+  - Breakable Tile
+  - Color
   layers:
   - Default
   - TransparentFX

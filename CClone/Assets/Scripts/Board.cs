@@ -44,11 +44,16 @@ public class Board : MonoBehaviour
     public GameObject[,] allDots;
     public Dot currentDot;
     private FindMatches findMatches;
+    public int basePieceValue;
+    private int streakValues = 1;
+    private ScoreManager scoreManager;
+    public float refillDelay = 0.5f;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];  //grid oluþturma
@@ -290,6 +295,7 @@ public class Board : MonoBehaviour
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(particle, .5f);
             Destroy(allDots[column, row]);
+            scoreManager.IncreaseScore(basePieceValue * streakValues);
             allDots[column, row] = null;
         }
     }
@@ -337,7 +343,7 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -361,7 +367,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -375,6 +381,15 @@ public class Board : MonoBehaviour
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
+                    int maxIterations = 0;
+                    while (MachesAt(i,j,dots[dotToUse]) && maxIterations <100)
+                    {
+                        maxIterations++;
+                        dotToUse = Random.Range(0, dots.Length);
+
+                    }
+
+                    maxIterations = 0;
                     GameObject piece = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                     allDots[i, j] = piece;
                     piece.GetComponent<Dot>().row = j;
@@ -405,22 +420,26 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refillDelay);
 
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            streakValues ++;
             DestroyMatches();
+            yield return new WaitForSeconds(2* refillDelay);
+            
         }
         findMatches.currentMatches.Clear();
         currentDot = null;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refillDelay);
 
         if (IsDeadlocked())
         {
+            ShuffleBoard();
             Debug.Log("Deadlocked!!!");
         }
         currentState = GameState.move;
+        streakValues = 1;
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction)
@@ -472,7 +491,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
         SwitchPieces(column, row, direction);
         if (CheckForMatches())
@@ -510,6 +529,64 @@ public class Board : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private IEnumerator ShuffleBoard()
+    {
+        yield return new WaitForSeconds(refillDelay);
+        //Create a list of game objects
+        List<GameObject> newBoard = new List<GameObject>();
+        //Add every piece to this list
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allDots[i,j]!=null)
+                {
+                    newBoard.Add(allDots[i, j]);
+
+                }
+            }
+        }
+        yield return new WaitForSeconds(refillDelay); 
+
+        //for every spot on the board..
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                //if this spot shouldn't be blank
+                if (!blankSpaces[i,j])
+                {
+                    //Pick a random number
+                    int pieceToUse = Random.Range(0, newBoard.Count);
+                   
+                    //Assign the column to the piece
+                    int maxIterations = 0;
+                    while (MachesAt(i, j, newBoard[pieceToUse]) && maxIterations < 100)
+                    { 
+                        pieceToUse = Random.Range(0, newBoard.Count);
+                        maxIterations++;
+                        Debug.Log(maxIterations);
+                    }
+                    //Make a container for piece
+                    Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
+                    maxIterations = 0;
+                    piece.column = i;
+                    //Assign the row to the piece
+                    piece.row = j;
+                    //Fill in the dots array with this new pieces 
+                    allDots[i, j] = newBoard[pieceToUse];
+                    //Remove it from the list
+                    newBoard.Remove(newBoard[pieceToUse]);
+                }
+            }
+        }
+        //Check if it's still deadlocked
+        if (IsDeadlocked())
+        {
+            ShuffleBoard();
+        }
     }
 }
 
